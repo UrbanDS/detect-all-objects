@@ -13,7 +13,7 @@ from keras import backend as K
 from keras.models import load_model
 from keras.layers import Input
 from PIL import Image, ImageFont, ImageDraw
-import tensorflow as tf
+# import tensorflow as tf
 
 from yolo3.model import yolo_eval, yolo_body, tiny_yolo_body
 from yolo3.utils import letterbox_image
@@ -39,8 +39,8 @@ class YOLO(object):
         self.iou = 0.01
         self.class_names = self._get_class()
         self.anchors = self._get_anchors()
-        # self.sess = K.get_session()
-        self.sess = tf.compat.v1.Session()
+        self.sess = K.get_session()
+        # self.sess = tf.compat.v1.Session()
         self.model_image_size = (None, None) # fixed size or (None, None), hw
         self.boxes, self.scores, self.classes = self.generate()
         isDrawBox = False
