@@ -30,7 +30,8 @@ class YOLO(object):
         # self.model_path = r'model_data/RS/yolo.h5.h5'
         # self.anchors_path = r'model_data\house_anchors.txt'
         # self.classes_path = r'D:\YOLO\keras-yolo3-master\model_data\addre_classes.txt'
-        self.model_path = 'model_data/yolo.h5' # model path or trained weights path
+        # self.model_path = 'model_data/yolo.h5' # model path or trained weights path
+        self.model_path = '/content/drive/My\ Drive/nyc-park/yolo.h5' # model path or trained weights path
         self.anchors_path = 'model_data/yolo_anchors.txt'
         self.classes_path = 'model_data/coco_classes.txt'
         self.score = 0.15
@@ -327,7 +328,7 @@ def close_session(self):
 def detect_img(yolo):
     while True:
         # folder = input('results/input/')
-        folder = '/content/drive/My\ Drive/nyc-park/photos/'
+        folder = '/content/drive/My\ Drive/nyc-park-pics/photos/'
         try:
            # image = Image.open(img)
             os.path.exists(folder)
