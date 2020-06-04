@@ -47,6 +47,8 @@ class YOLO(object):
 
 
 
+    def close_session(self):
+        self.sess.close()
 
     def _get_class(self):
         classes_path = os.path.expanduser(self.classes_path)
@@ -324,8 +326,7 @@ class YOLO(object):
         print('Processing time: %.1f' % (end - start))
         #return pd.concat(df_list)
 
-def close_session(self):
-    self.sess.close()
+
 
 def detect_img(yolo):
     while True:
