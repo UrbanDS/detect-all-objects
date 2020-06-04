@@ -32,7 +32,7 @@ class YOLO(object):
         # self.anchors_path = r'model_data\house_anchors.txt'
         # self.classes_path = r'D:\YOLO\keras-yolo3-master\model_data\addre_classes.txt'
         # self.model_path = 'model_data/yolo.h5' # model path or trained weights path
-        self.model_path = '/content/drive/My Drive/nyc-park/yolo.h5' # model path or trained weights path
+        self.model_path = '/gdrive/nyc-park/yolo.h5' # model path or trained weights path
         self.anchors_path = 'model_data/yolo_anchors.txt'
         self.classes_path = 'model_data/coco_classes.txt'
         self.score = 0.15
@@ -290,7 +290,7 @@ class YOLO(object):
         start = timer()
         all_files = glob.glob(folder + '/*.jpg', recursive=True)
         #df_list = [] # name, label, score, top, left, bottom, right
-
+        print(folder)
         print('Image number: ', len(all_files))
         print("Start detect...")
         i = 0
@@ -298,7 +298,7 @@ class YOLO(object):
         # p = progressbar.ProgressBar()
         # a=len(all_files)
         # p.start_time(a)
-        w = open('/content/drive/My Drive/nyc-park/YOLO_label_score0p005.csv', 'w', newline="")
+        w = open('/gdrive/nyc-park/YOLO_label_score0p005.csv', 'w', newline="")
         w.writelines('top,left,bottom,right,class_name,score,out_classes,image,area_pct,x_min,y_min,width,height\n')
         result_folder = 'results/output/'
         for file in all_files:
@@ -329,21 +329,22 @@ class YOLO(object):
 
 
 def detect_img(yolo):
-    while True:
+    # while True:
         # folder = input('results/input/')
-        folder = '/content/drive/My Drive/nyc-park-pics/photos/'
-        try:
-           # image = Image.open(img)
-            os.path.exists(folder)
-        except:
-            print('Open Folder Error! Try Again!')
-            continue
-        else:
-            yolo.detect_image_folder(folder)
-            print("Finished! ")
-            # df.to_csv(, index=False)
-            #r_image.show()
-            yolo.close_session()
+        
+    folder = '/gdrive/nyc-park/photos'
+    try:
+        # image = Image.open(img)
+        os.path.exists(folder)
+    except:
+        print('Open Folder Error! Try Again!')
+        # continue
+    else:
+        yolo.detect_image_folder(folder)
+        print("Finished! ")
+        # df.to_csv(, index=False)
+        #r_image.show()
+        yolo.close_session()
 
 
 
