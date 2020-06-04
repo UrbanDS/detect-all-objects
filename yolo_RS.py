@@ -13,6 +13,7 @@ from keras import backend as K
 from keras.models import load_model
 from keras.layers import Input
 from PIL import Image, ImageFont, ImageDraw
+import tensorflow as tf
 
 from yolo3.model import yolo_eval, yolo_body, tiny_yolo_body
 from yolo3.utils import letterbox_image
@@ -31,14 +32,15 @@ class YOLO(object):
         # self.anchors_path = r'model_data\house_anchors.txt'
         # self.classes_path = r'D:\YOLO\keras-yolo3-master\model_data\addre_classes.txt'
         # self.model_path = 'model_data/yolo.h5' # model path or trained weights path
-        self.model_path = '/content/drive/My\ Drive/nyc-park/yolo.h5' # model path or trained weights path
+        self.model_path = '/content/drive/My Drive/nyc-park/yolo.h5' # model path or trained weights path
         self.anchors_path = 'model_data/yolo_anchors.txt'
         self.classes_path = 'model_data/coco_classes.txt'
         self.score = 0.15
         self.iou = 0.01
         self.class_names = self._get_class()
         self.anchors = self._get_anchors()
-        self.sess = K.get_session()
+        # self.sess = K.get_session()
+        self.sess = tf.compat.v1.Session()
         self.model_image_size = (None, None) # fixed size or (None, None), hw
         self.boxes, self.scores, self.classes = self.generate()
         isDrawBox = False
@@ -294,7 +296,7 @@ class YOLO(object):
         # p = progressbar.ProgressBar()
         # a=len(all_files)
         # p.start_time(a)
-        w = open('/content/drive/My\ Drive/nyc-park/YOLO_label_score0p005.csv', 'w', newline="")
+        w = open('/content/drive/My Drive/nyc-park/YOLO_label_score0p005.csv', 'w', newline="")
         w.writelines('top,left,bottom,right,class_name,score,out_classes,image,area_pct,x_min,y_min,width,height\n')
         result_folder = 'results/output/'
         for file in all_files:
@@ -328,7 +330,7 @@ def close_session(self):
 def detect_img(yolo):
     while True:
         # folder = input('results/input/')
-        folder = '/content/drive/My\ Drive/nyc-park-pics/photos/'
+        folder = '/content/drive/My Drive/nyc-park-pics/photos/'
         try:
            # image = Image.open(img)
             os.path.exists(folder)
