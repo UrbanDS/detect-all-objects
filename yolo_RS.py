@@ -20,10 +20,10 @@ from yolo3.utils import letterbox_image
 import os
 import glob
 import pandas as pd
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 from keras.utils import multi_gpu_model
-gpu_num=1
-isDrawBox = False
+gpu_num=0
+isDrawBox = True
 
 class YOLO(object):
     def __init__(self):
@@ -298,7 +298,8 @@ class YOLO(object):
         # p = progressbar.ProgressBar()
         # a=len(all_files)
         # p.start_time(a)
-        w = open('/gdrive/nyc-park/YOLO_label_score0p005.csv', 'w', newline="")
+        # w = open('/gdrive/nyc-park/YOLO_label_score0p005.csv', 'w', newline="")
+        w = open('photos.csv', 'w', newline="")
         w.writelines('top,left,bottom,right,class_name,score,out_classes,image,area_pct,x_min,y_min,width,height\n')
         result_folder = 'results/output/'
         for file in all_files:
@@ -332,7 +333,8 @@ def detect_img(yolo):
     # while True:
         # folder = input('results/input/')
         
-    folder = '/gdrive/nyc-park/photos-3'
+    # folder = '/gdrive/nyc-park/photos-3'
+    folder = 'photos'
     try:
         # image = Image.open(img)
         os.path.exists(folder)
