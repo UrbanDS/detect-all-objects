@@ -1,31 +1,31 @@
-#!/bin/bash
-
-# age: gputest.sh
+#!/bin/bash -l
+#
+# Usage: gputest.sh
 # Change job name and email address as needed 
 #        
 # -- our name ---
-#$ -N nlp
+#SBATCH -J gat
+#SBATCH -o gat.output
 
-#$ -S /bin/sh
-# Make sure that the .e and .o file arrive in the
-#working directory
-#$ -cwd
-#Merge the standard out and standard error to one file
-#$ -j y
-# Send mail at submission and completion of script
-#$ -m be
+# partition
+#SBATCH -p xye 
+# to request a GPU
+#SBATCH --gres=gpu:1
 
-# Request a gpu
-#$ -q datasci
-### #$ -q short
+Request an amount of RAM for the job
+#SBATCH --mem=32G #32GB requested.
+# Run on 1 node
+#SBATCH --nodes=1
+# Use 1 CPU
+#SBATCH --ntasks-per-node=2 
 
 /bin/echo Running on host: `hostname`.
 /bin/echo In directory: `pwd`
 /bin/echo Starting on: `date`
  
 # Load CUDA module
-. /opt/modules/init/bash
-module load cuda
 module load singularity
+module load cuda
+#This is an example command
 
 singularity exec --nv docker://divyachandana/kerasyolo:latest python ./yolo_RS_1.py
