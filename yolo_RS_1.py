@@ -21,7 +21,7 @@ import pandas as pd
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 from keras.utils import multi_gpu_model
 gpu_num=0
-isDrawBox = True
+isDrawBox = False
 
 class YOLO(object):
     def __init__(self):
@@ -280,7 +280,7 @@ class YOLO(object):
 
         return df, image
 
-    def detect_image_folder(self, folder):
+    def detect_image_folder(self, folder,name):
         start = timer()
         all_files = glob.glob(folder + '/*.jpg', recursive=True)
         #df_list = [] # name, label, score, top, left, bottom, right
@@ -292,7 +292,7 @@ class YOLO(object):
         # p = progressbar.ProgressBar()
         # a=len(all_files)
         # p.start_time(a)
-        w = open('photos.csv', 'w', newline="")
+        w = open('../nyc/new-'+name+'.csv', 'w', newline="")
         w.writelines('top,left,bottom,right,class_name,score,out_classes,image,area_pct,x_min,y_min,width,height\n')
         result_folder = 'results/output/'
         for file in all_files:
@@ -326,19 +326,24 @@ def close_session(self):
 def detect_img(yolo):
     while True:
         # folder = input('results/input/')
-        folder = 'photos'
-        try:
-           # image = Image.open(img)
-            os.path.exists(folder)
-        except:
-            print('Open Folder Error! Try Again!')
-            continue
-        else:
-            yolo.detect_image_folder(folder)
-            print("Finished! ")
+        # folder = '../nyc/photos-2'
+        d='../nyc/'
+        folders = list(filter(lambda x: os.path.isdir(os.path.join(d, x)), os.listdir(d)))
+        print(folders)
+        # try:
+        #    # image = Image.open(img)
+        #     os.path.exists(folder)
+        # except:
+        #     print('Open Folder Error! Try Again!')
+        #     continue
+        # else:
+        for fold in folders :
+            folder = d + fold
+            yolo.detect_image_folder(folder,fold)
+        print("Finished! ")
             # df.to_csv(, index=False)
             #r_image.show()
-            yolo.close_session()
+        yolo.close_session()
 
 
 
